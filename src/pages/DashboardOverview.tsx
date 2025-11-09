@@ -1,7 +1,7 @@
 import React from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../src/components/ui/card';
-import { Button } from '../src/components/ui/button';
-import { Page } from '../App';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
+import { Button } from '../components/ui/button';
+import { Page } from '../../App';
 
 interface DashboardPageProps {
   navigate: (page: Page) => void;
