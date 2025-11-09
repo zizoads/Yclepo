@@ -1,36 +1,36 @@
 {
-  "name": "yclep-next",
-  "version": "0.1.0",
+  "name": "yclep",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma generate"
+    "db:push": "prisma db push",
+    "db:generate": "prisma generate",
+    "db:studio": "prisma studio"
   },
   "dependencies": {
-    "@auth/prisma-adapter": "^2.2.0",
-    "@prisma/client": "^5.15.0",
-    "@radix-ui/react-slot": "^1.0.2",
-    "class-variance-authority": "^0.7.0",
-    "clsx": "^2.1.1",
-    "lucide-react": "^0.390.0",
-    "next": "14.2.3",
-    "next-auth": "^5.0.0-beta.19",
-    "react": "^18",
-    "react-dom": "^18",
-    "tailwind-merge": "^2.3.0"
+    "bcryptjs": "^2.4.3",
+    "lucide-react": "^0.292.0",
+    "next": "14.0.0",
+    "next-auth": "4.24.5",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "@prisma/client": "^5.0.0"
   },
   "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.3",
-    "postcss": "^8",
-    "prisma": "^5.15.0",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node": "20.0.0",
+    "@types/react": "18.2.0",
+    "@types/react-dom": "18.2.0",
+    "autoprefixer": "^10.4.0",
+    "eslint": "8.0.0",
+    "eslint-config-next": "14.0.0",
+    "postcss": "^8.4.0",
+    "prisma": "^5.0.0",
+    "tailwindcss": "^3.3.0",
+    "typescript": "5.0.0"
   }
 }

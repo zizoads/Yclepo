@@ -1,15 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import DashboardLayout from './src/components/layout/DashboardLayout';
+import SignInPage from './src/pages/SignInPage';
+import { LoadingSpinner } from './src/components/ui/loading-spinner';
 import DashboardPage from './src/pages/DashboardOverview';
 import ProductsPage from './src/pages/ProductsDashboard';
 import NewProductPage from './src/pages/NewProductPage';
-import SignInPage from './src/pages/SignInPage';
-import Sidebar from './src/components/Sidebar';
 
 export type Page = 'signin' | 'dashboard' | 'products' | 'new-product';
 
+// Mock user data for the session
+const mockUser = { name: 'عبدالعزيز', email: 'demo@yclep.com' };
+
 export default function App() {
-  const [currentPage, setCurrentPage] = useState<Page>('signin');
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [currentPage, setCurrentPage] = useState<Page>('dashboard');
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate checking for an existing session
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 700);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const navigate = (page: Page) => {
     setCurrentPage(page);
@@ -18,12 +32,12 @@ export default function App() {
   const handleLogin = () => {
     setIsAuthenticated(true);
     setCurrentPage('dashboard');
-  }
+  };
 
   const handleLogout = () => {
     setIsAuthenticated(false);
-    setCurrentPage('signin');
-  }
+    // No need to set page, conditional render will show SignInPage
+  };
 
   const renderPage = () => {
     switch (currentPage) {
@@ -38,18 +52,29 @@ export default function App() {
     }
   };
 
-  return (
-    <>
-      {isAuthenticated ? (
-        <div className="flex min-h-screen" dir="rtl">
-          <Sidebar navigate={navigate} onLogout={handleLogout} />
-          <main className="flex-1 bg-gray-50">
-            {renderPage()}
-          </main>
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div className="text-center">
+          <LoadingSpinner size="lg" />
+          <p className="mt-4 text-gray-600">جاري التحميل...</p>
         </div>
-      ) : (
-        <SignInPage onLogin={handleLogin} />
-      )}
-    </>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <SignInPage onLogin={handleLogin} />;
+  }
+
+  return (
+    <DashboardLayout
+      user={mockUser}
+      onSignOut={handleLogout}
+      navigate={navigate}
+      currentPage={currentPage}
+    >
+      {renderPage()}
+    </DashboardLayout>
   );
 }
