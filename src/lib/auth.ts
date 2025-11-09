@@ -3,8 +3,7 @@ import Credentials from 'next-auth/providers/credentials'
 import { prisma } from './db'
 import type { UserRole } from '@prisma/client'
 
-// FIX: Update module augmentation for next-auth v5 Session and User interfaces.
-// The module 'next-auth' is incorrect for v5; it should be '@auth/core/types'.
+// FIX: Use '@auth/core/types' for next-auth v5 module augmentation.
 declare module '@auth/core/types' {
   interface Session {
     user: {
@@ -22,10 +21,8 @@ declare module '@auth/core/types' {
   }
 }
 
-// FIX: Update module augmentation for next-auth v5 JWT interface.
-// The module '@auth/core/jwt' is incorrect. When using the `next-auth` package,
-// the correct module to augment for JWT is 'next-auth/jwt'.
-declare module 'next-auth/jwt' {
+// FIX: Use '@auth/core/jwt' for next-auth v5 module augmentation.
+declare module '@auth/core/jwt' {
   interface JWT {
     role: UserRole;
   }
@@ -35,7 +32,7 @@ declare module 'next-auth/jwt' {
 export const { handlers, auth, signIn, signOut } = NextAuth({
   session: { strategy: 'jwt' },
   pages: {
-    signIn: '/login',
+    signIn: '/auth/signin',
   },
   providers: [
     Credentials({
